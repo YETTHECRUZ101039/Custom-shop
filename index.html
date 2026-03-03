@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Custom Keychain Shop</title>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    .preview {
+      width: 150px;
+      height: 150px;
+      margin: 20px auto;
+      background-color: pink;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Customize Your Keychain</h1>
+
+<select id="product">
+  <option>Cat Keychain</option>
+  <option>Heart Clicker</option>
+  <option>Name Keychain</option>
+</select>
+
+<br><br>
+
+<input type="color" id="colorPicker">
+
+<br><br>
+
+<input type="text" id="customText" placeholder="Enter your text">
+
+<div class="preview" id="previewBox">
+  Preview
+</div>
+
+<br>
+
+<button onclick="submitOrder()">Order Now</button>
+
+<script>
+  const colorPicker = document.getElementById("colorPicker");
+  const previewBox = document.getElementById("previewBox");
+  const customText = document.getElementById("customText");
+
+  colorPicker.addEventListener("input", function() {
+    previewBox.style.backgroundColor = colorPicker.value;
+  });
+
+  customText.addEventListener("input", function() {
+    previewBox.innerText = customText.value;
+  });
+
+  function submitOrder() {
+    const product = document.getElementById("product").value;
+    const color = colorPicker.value;
+    const text = customText.value;
+
+    alert(
+      "Product: " + product +
+      "\nColor: " + color +
+      "\nText: " + text
+    );
+  }
+</script>
+
+</body>
+</html>
