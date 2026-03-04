@@ -14,8 +14,10 @@
       border-radius: 15px;
       color: white;
       font-weight: bold;
+      background-color: pink;
     }
-    button { background: black; color: white; border: none; }
+    button { background: black; color: white; border: none; cursor: pointer; }
+    button:hover { opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -35,6 +37,69 @@
 <input type="number" id="quantity" value="1" min="1">
 
 <div class="preview" id="previewBox">Preview</div>
+
+<h3>Total: ₱<span id="total">50</span></h3>
+
+<hr>
+
+<h3>Your Details</h3>
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="text" id="phone" placeholder="Phone Number">
+<input type="text" id="address" placeholder="Delivery Address">
+
+<button onclick="sendOrder()">Place Order</button>
+
+<script>
+  // 🔹 REPLACE THIS WITH YOUR PUBLIC KEY
+  emailjs.init("9eV7HLW1GFZFrzLlo");
+
+  const product = document.getElementById("product");
+  const quantity = document.getElementById("quantity");
+  const total = document.getElementById("total");
+  const preview = document.getElementById("previewBox");
+  const colorPicker = document.getElementById("colorPicker");
+  const customText = document.getElementById("customText");
+
+  function updateTotal() {
+    total.innerText = product.value * quantity.value;
+  }
+
+  product.addEventListener("change", updateTotal);
+  quantity.addEventListener("input", updateTotal);
+
+  colorPicker.addEventListener("input", function() {
+    preview.style.backgroundColor = colorPicker.value;
+  });
+
+  customText.addEventListener("input", function() {
+    preview.innerText = customText.value || "Preview";
+  });
+
+  function sendOrder() {
+    emailjs.send("service_6twy74e", "template_mo3hkih", {
+      to_email: "yaelthescientist@gmail.com",
+      product: product.options[product.selectedIndex].text,
+      color: colorPicker.value,
+      text: customText.value,
+      quantity: quantity.value,
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("address").value
+    }).then(function(response) {
+        alert("✅ Order Sent Successfully!");
+    }).catch(function(error) {
+        alert("❌ Failed to send order.");
+        console.log(error);
+    });
+  }
+
+  updateTotal();
+</script>
+
+</body>
+</html><div class="preview" id="previewBox">Preview</div>
 
 <h3>Total: ₱<span id="total">50</span></h3>
 
